@@ -63,7 +63,7 @@ body {
   }
 
   var getTimeInMinutes = function(string){
-    var hourStart, hourEnd, minuteStart, minuteEnd, absoluteStart, absoluteEnd;
+    var hourStart, minuteStart, absoluteStart;
 
     hourStart = Number(string.split(":")[0]);
     minuteStart = Number(string.split(":")[1]);
@@ -75,7 +75,7 @@ body {
   var toAbsolute = function(hourData){
     return hourData.map(function(current){
 
-      var hourStart, hourEnd, minuteStart, minuteEnd, absoluteStart, absoluteEnd;
+      var absoluteStart, absoluteEnd;
 
       absoluteStart = getTimeInMinutes(current.start);
       absoluteEnd = getTimeInMinutes(current.end);
