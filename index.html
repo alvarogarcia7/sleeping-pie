@@ -47,6 +47,10 @@ body {
      return out;
   }
 
+  var getStatistics = function(total, amount){
+    return amount + " minutes \t "+ Number(amount / 60).toFixed(1) + " hours \t " + Number(amount * 100/ total.total).toFixed(0) + "%";
+  }
+
   var printStatistics = function(slices){
     var total = {sleeping:0, notSleeping:0}, i;
 
@@ -59,9 +63,11 @@ body {
       }
     }
 
-    console.log("24h = "+ 24*60 + ", total amount = " + (total.sleeping + total.notSleeping) + " of which:"
-      + "\n" + total.sleeping +" minutes sleeping"
-      + "\n" + total.notSleeping + " minutes not sleeping");
+    total.total = (total.sleeping + total.notSleeping);
+
+    console.log("24h = "+ 24*60 + ", total amount = " + total.total + " of which:"
+      + "\nsleeping:     " + getStatistics(total, total.sleeping)
+      + "\nnot sleeping: " + getStatistics(total, total.notSleeping));
   }
 
   var splitIfNecessary = function(hourAbsolute){
