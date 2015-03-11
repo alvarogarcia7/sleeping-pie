@@ -56,7 +56,7 @@ body {
         
         var firstSlice = clone_(lastSlice);
         firstSlice.start = 0;
-        firstSlice.end = firstMinute - 1;
+        firstSlice.end = firstMinute;
         shift = firstMinute;
         hourData.unshift(firstSlice);
 
@@ -89,7 +89,7 @@ body {
       total += slices[i].amount;
     }
 
-    console.log("24h = "+ 24*60+ ", amount = " + total);
+    console.log("24h = "+ 24*60 + ", amount = " + total);
 
     return slices;
 
