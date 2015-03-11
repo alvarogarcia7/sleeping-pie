@@ -90,19 +90,23 @@ body {
     return hourData;
   }
 
+  var slice = function(splitData){
+     return splitData.map(function(current){
+
+      var difference = current.end - current.start;
+      var color = current.sleeping ? colorMap.sleeping: colorMap.daylight;
+
+      return {part:current.part, amount: difference, color: color, sleeping:current.sleeping};
+      });
+  }
+
   var toAmount = function(hourData){
 
     var hourAbsolute = toAbsolute(hourData);
 
     var splitData = splitIfNecessary(hourAbsolute);
 
-    var slices = splitData.map(function(current){
-
-      var difference = current.end - current.start;
-      var color = current.sleeping ? colorMap.sleeping: colorMap.daylight;
-
-      return {part:current.part, amount: difference, color: color, sleeping:current.sleeping};
-    });
+    var slices = slice(splitData);
 
     printStatistics(slices);
 
