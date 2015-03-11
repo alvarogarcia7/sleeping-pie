@@ -15,6 +15,12 @@ body {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
+  var colorMap =
+    {
+      sleeping: "#999999",
+      daylight: "#d8d8d8"
+    };
+
   var translate = function(shape){
     return "translate(" + shape + ")";
   }
@@ -38,10 +44,15 @@ body {
     return hourAbsolute.map(function(current){
 
       var difference = current.end - current.start;
+      var color = current.sleeping ? colorMap.sleeping: colorMap.daylight;
 
-      return {part:current.part, amount: difference};
+      return {part:current.part, amount: difference, color: color};
     });
 
+  }
+
+  var color = function(data){
+    return data.data.color;
   }
 
   var toAbsolute = function(hourData){
@@ -62,7 +73,10 @@ body {
         absoluteEnd += 24 * 60;
       }
 
-      return {part:current.part, start: absoluteStart, end: absoluteEnd};
+      current.start = absoluteStart;
+      current.end = absoluteEnd;
+
+      return current;
     });
   }
 
@@ -70,12 +84,10 @@ var width = 960,
     height = 500,
     radius = Math.min(width, height) / 2;
 
-var color = d3.scale.ordinal()
-    .range(["#999999", "#d8d8d8"]);
-
 var hourData = [
-{part: "core", start: "8:00", end:"12:00"},
-{part: "daylight", start: "12:00", end: "8:00"}];
+{part: "core", start: "8:00", end:"12:00", sleeping: true},
+{part: "daylight", start: "12:00", end: "8:00", sleeping: false},
+{part: "daylight", start: "12:00", end: "8:00", sleeping: false}];
 
 
 var data = toAmount(hourData);
@@ -102,7 +114,7 @@ var svg = d3.select("body").append("svg")
 
   g.append("path")
       .attr("d", arc)
-      .style("fill", function(d) { return color(d.data.part); });
+      .style("fill", color);
 
   g.append("text")
       .attr("transform", function(d) { return  translate(arc.centroid(d)); })
