@@ -61,14 +61,13 @@ body {
       var hourStart, hourEnd, minuteStart, minuteEnd, absoluteStart, absoluteEnd;
 
       hourStart = Number(current.start.split(":")[0]);
-      hourEnd = Number(current.end.split(":")[0]);
-
       minuteStart = Number(current.start.split(":")[1]);
-      minuteEnd = Number(current.end.split(":")[1]);
-
-      absoluteEnd = hourEnd * 60 + minuteEnd;
       absoluteStart = hourStart * 60 + minuteStart;
 
+      hourEnd = Number(current.end.split(":")[0]);
+      minuteEnd = Number(current.end.split(":")[1]);
+      absoluteEnd = hourEnd * 60 + minuteEnd;
+      
       if(absoluteEnd < absoluteStart){
         absoluteEnd += 24 * 60;
       }
