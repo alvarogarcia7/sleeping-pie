@@ -75,13 +75,23 @@ body {
 
     var splitData = splitIfNecessary(hourAbsolute);
 
-    return splitData.map(function(current){
+    var slices = splitData.map(function(current){
 
       var difference = current.end - current.start;
       var color = current.sleeping ? colorMap.sleeping: colorMap.daylight;
 
       return {part:current.part, amount: difference, color: color};
     });
+
+    var total = 0, i;
+
+    for(i = 0; i < slices.length; i++){
+      total += slices[i].amount;
+    }
+
+    console.log("24h = "+ 24*60+ ", amount = " + total);
+
+    return slices;
 
   }
 
