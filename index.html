@@ -15,6 +15,10 @@ body {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
+  var translate = function(shape){
+    return "translate(" + shape + ")";
+  }
+
 var width = 960,
     height = 500,
     radius = Math.min(width, height) / 2;
@@ -51,9 +55,11 @@ var svg = d3.select("body").append("svg")
       .style("fill", function(d) { return color(d.data.part); });
 
   g.append("text")
-      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+      .attr("transform", function(d) { return  translate(arc.centroid(d)); })
       .attr("dy", ".35em")
       .style("text-anchor", "middle")
       .text(function(d) { return d.data.part; });
+
+
 
 </script>
