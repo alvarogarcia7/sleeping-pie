@@ -48,13 +48,20 @@ body {
   }
 
   var printStatistics = function(slices){
-    var total = 0, i;
+    var total = {sleeping:0, notSleeping:0}, i;
 
     for(i = 0; i < slices.length; i++){
-      total += slices[i].amount;
+      var currentAmount = slices[i].amount;
+      if(slices[i].sleeping){
+        total.sleeping += currentAmount;
+      } else {
+        total.notSleeping += currentAmount;
+      }
     }
 
-    console.log("24h = "+ 24*60 + ", amount = " + total);
+    console.log("24h = "+ 24*60 + ", total amount = " + (total.sleeping + total.notSleeping) + " of which:"
+      + "\n" + total.sleeping +" minutes sleeping"
+      + "\n" + total.notSleeping + " minutes not sleeping");
   }
 
   var splitIfNecessary = function(hourAbsolute){
@@ -88,7 +95,7 @@ body {
       var difference = current.end - current.start;
       var color = current.sleeping ? colorMap.sleeping: colorMap.daylight;
 
-      return {part:current.part, amount: difference, color: color};
+      return {part:current.part, amount: difference, color: color, sleeping:current.sleeping};
     });
 
     printStatistics(slices);
