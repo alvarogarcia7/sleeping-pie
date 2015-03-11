@@ -47,6 +47,16 @@ body {
      return out;
   }
 
+  var printStatistics = function(slices){
+    var total = 0, i;
+
+    for(i = 0; i < slices.length; i++){
+      total += slices[i].amount;
+    }
+
+    console.log("24h = "+ 24*60 + ", amount = " + total);
+  }
+
   var splitIfNecessary = function(hourAbsolute){
     if(hourData.length>0){
       var firstMinute = hourAbsolute[0].start;
@@ -83,13 +93,7 @@ body {
       return {part:current.part, amount: difference, color: color};
     });
 
-    var total = 0, i;
-
-    for(i = 0; i < slices.length; i++){
-      total += slices[i].amount;
-    }
-
-    console.log("24h = "+ 24*60 + ", amount = " + total);
+    printStatistics(slices);
 
     return slices;
 
