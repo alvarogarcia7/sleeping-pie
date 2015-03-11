@@ -14,3 +14,8 @@ var hourData = [
 ```
 
 this data should cover the 24h (or results might not be accurate). You can start writing your schedule from the time you wake up, the system "wraps" the last moment with the first one and you will see the slices appear in the correct "time place"
+
+
+## Help
+
+go to index and follow instructions
