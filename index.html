@@ -63,10 +63,10 @@ body {
   }
 
   var getTimeInMinutes = function(string){
-    var hourStart, minuteStart, absoluteStart;
+    var hourStart, minuteStart, absoluteStart, parts = string.split(":");
 
-    hourStart = Number(string.split(":")[0]);
-    minuteStart = Number(string.split(":")[1]);
+    hourStart = Number(parts[0]);
+    minuteStart = Number(parts[1]);
     absoluteStart = hourStart * 60 + minuteStart;  
 
     return absoluteStart;
