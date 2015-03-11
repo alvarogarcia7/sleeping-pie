@@ -37,18 +37,45 @@ body {
     return data.amount;
   }
 
-  var splitIfNecessary = function(hourData){
+  var clone_ = function(o){
+     var out, v, key;
+     out = Array.isArray(o) ? [] : {};
+     for (key in o) {
+         v = o[key];
+         out[key] = (typeof v === "object") ? clone_(v) : v;
+     }
+     return out;
+  }
+
+  var splitIfNecessary = function(hourAbsolute){
+    if(hourData.length>0){
+      var firstMinute = hourAbsolute[0].start;
+      var lastSlice = hourData[hourData.length - 1];
+      var shift = 0;
+      if(firstMinute > 0){
+        
+        var firstSlice = clone_(lastSlice);
+        firstSlice.start = 0;
+        firstSlice.end = firstMinute - 1;
+        shift = firstMinute;
+        hourData.unshift(firstSlice);
+
+
+        lastSlice.end -= shift;
+      }
+    }
+    
     //TODO AGB implement this
     return hourData;
   }
 
   var toAmount = function(hourData){
 
-    var splitData = splitIfNecessary(hourData);
+    var hourAbsolute = toAbsolute(hourData);
 
-    var hourAbsolute = toAbsolute(splitData);
+    var splitData = splitIfNecessary(hourAbsolute);
 
-    return hourAbsolute.map(function(current){
+    return splitData.map(function(current){
 
       var difference = current.end - current.start;
       var color = current.sleeping ? colorMap.sleeping: colorMap.daylight;
@@ -96,7 +123,7 @@ var width = 960,
 var hourData = [
 {part: "core", start: "8:00", end:"12:00", sleeping: true},
 {part: "daylight", start: "12:00", end: "8:00", sleeping: false},
-{part: "daylight", start: "12:00", end: "8:00", sleeping: false}];
+];
 
 
 var data = toAmount(hourData);
