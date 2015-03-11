@@ -37,9 +37,16 @@ body {
     return data.amount;
   }
 
+  var splitIfNecessary = function(hourData){
+    //TODO AGB implement this
+    return hourData;
+  }
+
   var toAmount = function(hourData){
 
-    var hourAbsolute = toAbsolute(hourData);
+    var splitData = splitIfNecessary(hourData);
+
+    var hourAbsolute = toAbsolute(splitData);
 
     return hourAbsolute.map(function(current){
 
