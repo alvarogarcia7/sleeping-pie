@@ -75,11 +75,9 @@ body {
   var toAbsolute = function(hourData){
     return hourData.map(function(current){
 
-      var absoluteStart, absoluteEnd;
+      var absoluteStart = getTimeInMinutes(current.start),
+          absoluteEnd = getTimeInMinutes(current.end);
 
-      absoluteStart = getTimeInMinutes(current.start);
-      absoluteEnd = getTimeInMinutes(current.end);
-      
       if(absoluteEnd < absoluteStart){
         absoluteEnd += 24 * 60;
       }
