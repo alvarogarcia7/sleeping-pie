@@ -23,6 +23,10 @@ body {
      return width/ 2 + "," + height / 2;
   }
 
+  var label = function(data){
+    return data.data.part;
+  }
+
 var width = 960,
     height = 500,
     radius = Math.min(width, height) / 2;
@@ -62,7 +66,7 @@ var svg = d3.select("body").append("svg")
       .attr("transform", function(d) { return  translate(arc.centroid(d)); })
       .attr("dy", ".35em")
       .style("text-anchor", "middle")
-      .text(function(d) { return d.data.part; });
+      .text(label);
 
 
 
