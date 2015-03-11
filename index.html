@@ -60,14 +60,13 @@ body {
   var splitIfNecessary = function(hourAbsolute){
     if(hourData.length>0){
       var firstMinute = hourAbsolute[0].start;
-      var lastSlice = hourData[hourData.length - 1];
-      var shift = 0;
       if(firstMinute > 0){
-        
+      
+        var lastSlice = hourData[hourData.length - 1];  
         var firstSlice = clone_(lastSlice);
         firstSlice.start = 0;
         firstSlice.end = firstMinute;
-        shift = firstMinute;
+        var shift = firstMinute;
         hourData.unshift(firstSlice);
 
 
