@@ -31,6 +31,41 @@ body {
     return data.amount;
   }
 
+  var toAmount = function(hourData){
+
+    var hourAbsolute = toAbsolute(hourData);
+
+    return hourAbsolute.map(function(current){
+
+      var difference = current.end - current.start;
+
+      return {part:current.part, amount: difference};
+    });
+
+  }
+
+  var toAbsolute = function(hourData){
+    return hourData.map(function(current){
+
+      var hourStart, hourEnd, minuteStart, minuteEnd, absoluteStart, absoluteEnd;
+
+      hourStart = Number(current.start.split(":")[0]);
+      hourEnd = Number(current.end.split(":")[0]);
+
+      minuteStart = Number(current.start.split(":")[1]);
+      minuteEnd = Number(current.end.split(":")[1]);
+
+      absoluteEnd = hourEnd * 60 + minuteEnd;
+      absoluteStart = hourStart * 60 + minuteStart;
+
+      if(absoluteEnd < absoluteStart){
+        absoluteEnd += 24 * 60;
+      }
+
+      return {part:current.part, start: absoluteStart, end: absoluteEnd};
+    });
+  }
+
 var width = 960,
     height = 500,
     radius = Math.min(width, height) / 2;
@@ -38,9 +73,12 @@ var width = 960,
 var color = d3.scale.ordinal()
     .range(["#999999", "#d8d8d8"]);
 
-var data = 
-  [{part: "core", amount: 800},
-   {part: "daylight", amount: 1600},]
+var hourData = [
+{part: "core", start: "8:00", end:"12:00"},
+{part: "daylight", start: "12:00", end: "8:00"}];
+
+
+var data = toAmount(hourData);
 
 
 var arc = d3.svg.arc()
